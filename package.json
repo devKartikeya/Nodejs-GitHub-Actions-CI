@@ -1,0 +1,13 @@
+{
+  "name": "nodejs-github-actions-ci",
+  "version": "1.0.0",
+  "description": "A Project to demonstrate CI/CD Pipeline using GitHub-Actions.",
+  "license": "ISC",
+  "author": "KM",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  }
+}
