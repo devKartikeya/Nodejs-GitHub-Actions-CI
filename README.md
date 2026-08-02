@@ -1,98 +1,157 @@
-# Node.js CI Pipeline with GitHub Actions
+# Node.js CI/CD Pipeline with GitHub Actions
 
-> A practical project demonstrating Continuous Integration (CI) using GitHub Actions with a Node.js application.
-
-## 📚 About
-
-This repository was built while learning **DevOps** and **GitHub Actions** from scratch.
-
-The goal is to understand **how modern CI pipelines work internally** instead of simply copying workflow files.
-
-The project evolves phase by phase, starting from a basic Node.js application and gradually introducing GitHub Actions, automated testing, Docker, Docker Hub, and finally Continuous Deployment (CD).
+> A practical implementation of a modern CI/CD pipeline using GitHub Actions, Docker, Docker Hub, and automated testing.
 
 ---
 
-## 🚀 Features
+## Overview
 
-- GitHub Actions Workflow
-- GitHub Hosted Ubuntu Runner
-- Repository Checkout
-- Node.js Setup
-- Dependency Installation
-- Automated Unit Testing with Jest
-- Docker Image Build
+This repository demonstrates the implementation of a Continuous Integration (CI) pipeline and Continuous Delivery (CD) and serves as the foundation for a complete Continuous Deployment (CD) workflow.
+
+Instead of focusing only on GitHub Actions syntax, the project explores the complete lifecycle of a software change—from a developer committing code to an automated Docker image being published to a container registry.
+
+The implementation is intentionally built incrementally to understand every stage of the pipeline and the responsibility of each component.
 
 ---
 
-## 🔄 Current CI Pipeline
+## Architecture
 
 ```text
-Developer
-    │
-    │ git push
-    ▼
-GitHub
-    │
-    ▼
-GitHub Runner (Ubuntu)
-    │
-    ├── Checkout Repository
-    ├── Setup Node.js
-    ├── Install Dependencies
-    ├── Run Unit Tests
-    └── Build Docker Image
+                +----------------+
+                |   Developer    |
+                +--------+-------+
+                         |
+                    git push
+                         |
+                         ▼
+                +----------------+
+                |     GitHub     |
+                +--------+-------+
+                         |
+                Workflow Trigger
+                         |
+                         ▼
+        +----------------------------------+
+        | GitHub Hosted Ubuntu Runner       |
+        |----------------------------------|
+        | • Checkout Repository            |
+        | • Setup Node.js                  |
+        | • Install Dependencies           |
+        | • Execute Jest Test Suite        |
+        | • Build Docker Image             |
+        | • Authenticate with Docker Hub   |
+        | • Push Docker Image              |
+        +---------------+------------------+
+                        |
+                        ▼
+               +------------------+
+               |    Docker Hub    |
+               +------------------+
+
+           (Production Deployment - Next Phase)
 ```
 
 ---
 
-## 🛠️ Technologies Used
+## Implemented Features
 
-- Node.js
-- Git
-- GitHub Actions
-- Jest
-- Docker
+- GitHub Actions Workflow
+- GitHub Hosted Runners
+- Repository Checkout
+- Node.js Environment Provisioning
+- Dependency Installation
+- Automated Unit Testing (Jest)
+- Docker Image Build
+- Docker Hub Authentication using GitHub Secrets
+- Automatic Docker Image Publishing
 
 ---
 
-## 📂 Project Structure
+## CI-CD Pipeline
 
-```
+Every push to the **main** branch automatically performs the following tasks:
+
+1. Provision a fresh Ubuntu runner.
+2. Checkout the latest source code.
+3. Configure the required Node.js runtime.
+4. Install project dependencies.
+5. Execute the Jest test suite.
+6. Build the Docker image.
+7. Authenticate with Docker Hub using encrypted repository secrets.
+8. Publish the latest Docker image to Docker Hub.
+
+Only if every previous step succeeds is the Docker image published.
+
+---
+
+## Technology Stack
+
+| Category | Technology |
+|----------|------------|
+| Language | Node.js |
+| Version Control | Git |
+| CI-CD Platform | GitHub Actions |
+| Testing | Jest |
+| Containerization | Docker |
+| Container Registry | Docker Hub |
+
+---
+
+## Repository Structure
+
+```text
 .
-├── .github
-│   └── workflows
+├── .github/
+│   └── workflows/
 │       └── ci.yml
+├── tests/
+│   └── app.test.js
 ├── app.js
-├── math.js
-├── math.test.js
+├── .dockerignore
+├── .gitignore
 ├── Dockerfile
 ├── package.json
+├── package-lock.json
 └── README.md
 ```
 
 ---
 
-## 📖 Learning Progress
+## Workflow Highlights
 
-- ✅ Phase 1 — Basic Node.js Project
-- ✅ Phase 2 — First GitHub Action
-- ✅ Phase 3 — Repository Checkout
-- ✅ Phase 4 — Node.js Setup & Runner Execution
-- ✅ Phase 5 — Automated Testing with Jest
-- ✅ Phase 6 — Docker Image Build
-
----
-
-## 🎯 Upcoming Phases
-
-- Docker Hub Integration
-- GitHub Secrets
-- Automated Deployment (CD)
-- SSH Deployment
-- Production CI/CD Pipeline
+- Fully automated CI pipeline
+- Stateless GitHub-hosted runners
+- Secure credential management using GitHub Secrets
+- Docker image generation
+- Automated image publication to Docker Hub
+- Fail-fast pipeline execution (tests must pass before image publication)
 
 ---
 
-## 📜 License
+## Learning Milestones
 
-MIT
+- ✅ Basic Node.js Project
+- ✅ GitHub Actions Fundamentals
+- ✅ Repository Checkout
+- ✅ GitHub Hosted Runner
+- ✅ Node.js Environment Setup
+- ✅ Dependency Installation
+- ✅ Automated Testing with Jest
+- ✅ Docker Image Build
+- ✅ Docker Hub Integration
+- ✅ Secure Secret Management
+
+---
+
+## Upcoming Enhancements
+
+- SSH-based Deployment
+- Docker Compose Deployment
+- Self-hosted Runner
+- Release Automation
+
+---
+
+## License
+
+This project is licensed under the MIT License.
