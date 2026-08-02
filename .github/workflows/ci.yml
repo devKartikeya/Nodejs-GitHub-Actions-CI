@@ -21,3 +21,6 @@ jobs:
 
       - name: Run Unit Tests
         run: npm test
+
+      - name: Build Docker Image
+        run: docker build -t nodejs-github-actions-ci .
