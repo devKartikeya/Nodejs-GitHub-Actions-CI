@@ -1,4 +1,4 @@
-name: First GitHub Action
+name: Node.js CI
 
 on:
   push:
@@ -6,15 +6,23 @@ on:
       - main
 
 jobs:
-  hello:
+  node-ci:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: List Repository Files
-        run: ls -la
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
-      - name: Print Working Directory
-        run: pwd
+      - name: Verify Node Version
+        run: node -v
+
+      - name: Verify NPM Version
+        run: npm -v
+
+      - name: Run Application
+        run: node app.js
