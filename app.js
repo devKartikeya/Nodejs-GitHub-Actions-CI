@@ -1,1 +1,3 @@
-console.log("Hello GitHub Actions!");
+const chalk = require("chalk");
+
+console.log(chalk.green("Hello GitHub Actions!"));
