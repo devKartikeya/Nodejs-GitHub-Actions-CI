@@ -7,11 +7,14 @@
   "type": "commonjs",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Tests Passed\"",
+    "test": "jest",
     "start": "node app.js"
   },
   "dependencies": {
     "chalk": "^6.0.0",
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
   }
 }
